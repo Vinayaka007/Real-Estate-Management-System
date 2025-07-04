@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Dynamic Data</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Light gray background color */
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+            background-color: white; /* White background color for the table */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>View</h1>
+
+        {% if data %}
+            <table>
+                <tr>
+                    {% for column in columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in data %}
+                    <tr>
+                        {% for column in columns %}
+                            <td>{{ row[column] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No data available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

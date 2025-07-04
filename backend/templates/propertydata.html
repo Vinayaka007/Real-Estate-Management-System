@@ -1,0 +1,103 @@
+{% extends "navbar.html" %}
+{% block title %}
+  add Property information
+{% endblock title %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container mt-4">
+    <div class="display-4 text-center">Add Property Data</div>
+    <div class="row">    
+        <div class="col-md-6">
+            {% include "message.html" %}
+            <div class="crd">
+                <div class="card-body">
+                    <!-- Correct the form tag placement -->
+                    <form action="/addpropertyinfo" method="post">
+                        <br>
+                        <div class="form-group">
+                            <input type="text" name="pcode" class="form-control mt-2" value="{{current_user.pcode}}" placeholder="{{current_user.pcode}}" readonly required >
+                        </div><br>
+
+                        <div class="form-group">
+                            <input type="text" placeholder="Location" name="plocation" class="form-control mt-2" required>
+                        </div><br>
+
+                        <div class="form-group">
+                            <select name="ptype" placeholder="Type" class="form-control mt-2" required>
+                                <option value="Sell">Sell</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Lease">Lease</option>
+                            </select>
+                        </div><br>
+                        
+                        <div class="form-group">
+                            <input type="text" placeholder="Number of BedRoom's?" name="bedroom" class="form-control mt-2" required>
+                        </div><br>
+
+                        <div class="form-group">
+                            <!-- Input field to display dimensions -->
+                            <input type="text" name="dimension" id="dimensionInput" class="form-control mt-2" value="" readonly required>
+                        </div><br>
+
+                        <div class="form-group">
+                            <!-- Input fields for length and width -->
+                            <input style="position: relative; left: 435px; width: 200px;" type="number" id="length" placeholder="Add Length" name="length" class="form-control mt-2" required>
+                            <input style="position: relative; left: 435px; width: 200px;" type="number" id="width" placeholder="Add Width" name="width" class="form-control mt-2" required>
+                        </div>
+
+                        <br>
+                        <script>
+                            // Add event listener to input fields
+                            document.getElementById('length').addEventListener('input', updateDimensions);
+                            document.getElementById('width').addEventListener('input', updateDimensions);
+
+                            function updateDimensions() {
+                                // Get values from input fields
+                                var length = document.getElementById('length').value;
+                                var width = document.getElementById('width').value;
+
+                                // Display dimensions in the input field above
+                                document.getElementById('dimensionInput').value =  length + '*' + width+"feet"  ;
+                            }
+                        </script>
+
+                        <div class="form-group">
+                            <input type="text" placeholder="Price" name="price" class="form-control mt-2" required>
+                        </div><br>
+
+                        <center><button class="btn btn-info" type="submit">Add</button></center>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:40rem">
+            <div style=" top:50px; left:80px" class="card">
+                <div class="card-header text-center">
+                    Your Entered Data
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    {% if user_data %}
+                    <li class="list-group-item">PCODE : <b>{{ user_data. pcode }}</b></li>
+                    <li class="list-group-item">Location : <b>{{ user_data. plocation }}</b></li>
+                    <li class="list-group-item">Property Type : <b>{{ user_data. ptype }}</b></li>
+                    <li class="list-group-item">BedRoom : <b>{{ user_data. bedroom }}</b></li>
+                    <li class="list-group-item">Dimension : <b>{{ user_data. dimension }}</b></li>
+                    <li class="list-group-item">Price : <b>{{ user_data. price }}/-</b></li>
+                    <li class="list-group-item"><a href="/pedit/{{user_data.id}}"><i class="fa-solid fa-pen-to-square"></i></b></li>
+                    <li class="list-group-item"><a href="/pdelete/{{user_data.id}}"><i class="fa-solid fa-trash"></i></b></li>
+                    {% else %}
+                        <li class="list-group-item">No data available</li>
+                    {% endif %}
+                  </ul>
+              </div>
+        </div>
+
+    </div>
+</div>
+{% endblock body %}

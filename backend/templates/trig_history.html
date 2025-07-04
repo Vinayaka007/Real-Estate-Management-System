@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property History</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .alert {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Recent Trigger History</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        {% if history_entries %}
+            <table border="1">
+                <tr>
+                    <th>Id</th>
+                    <th>Timestamp</th>
+                    <th>PCODE</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Bedroom</th>
+                    <th>Dimension</th>
+                    <th>Price</th>
+                </tr>
+                {% for entry in history_entries %}
+                    <tr>
+                        <td>{{ entry.id }}</td>
+                        <td>{{ entry.timestamp }}</td>
+                        <td>{{ entry.pcode }}</td>
+                        <td>{{ entry.plocation }}</td>
+                        <td>{{ entry.ptype }}</td>
+                        <td>{{ entry.bedroom }}</td>
+                        <td>{{ entry.dimension }}</td>
+                        <td>{{ entry.price }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No property history available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
